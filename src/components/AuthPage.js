@@ -155,7 +155,7 @@ const AuthPage = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-forms-wrapper">
-          {/* Login Form */}
+      
           <div className="auth-form-box">
             <h2 className="auth-title">Login</h2>
             <form onSubmit={handleLoginSubmit} className="auth-form">
