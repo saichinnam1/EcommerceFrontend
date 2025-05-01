@@ -167,7 +167,7 @@ const AuthPage = () => {
                   value={loginCredentials.username}
                   onChange={handleLoginInputChange}
                   className="form-control"
-                  placeholder="Enter your email or username"
+                  placeholder="Enter your Username"
                   required
                 />
               </div>
