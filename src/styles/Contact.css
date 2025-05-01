@@ -1,0 +1,237 @@
+.contact-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed to flex-start to respect navbar */
+  background-color: #f9f9f9;
+  padding: 4rem 1rem 1rem; /* Top padding to push content below navbar */
+}
+
+.contact-content {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin-top: 1rem; /* Additional margin to ensure spacing */
+}
+
+.contact-title {
+  font-size: 3.0rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.contact-subtitle {
+  font-size: 1.5rem;
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Standardized gap between items */
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  margin: 0; /* Removed margin to rely on gap */
+  padding: 0.5rem; /* Added padding for internal spacing */
+}
+
+.contact-icon {
+  font-size: 1.5em;
+  color: #6cd08c;
+  margin-bottom: 0.25rem; /* Reduced margin for tighter spacing */
+}
+
+.info-item p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 1rem;
+  line-height: 1.2; /* Ensure consistent line spacing */
+}
+
+.info-item strong {
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.form-title {
+  font-size: 1.5em;
+  color: #6cd08c;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  font-size: 1em;
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.submit-btn {
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+  color: #6cd08c;
+  border: 1px solid #6cd08c;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  width: 100%;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #6cd08c, #8de4a8);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  z-index: -1;
+}
+
+.submit-btn:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(108, 208, 140, 0.3);
+}
+
+.submit-btn:hover::before {
+  transform: translateX(0);
+}
+
+.submit-btn:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.submit-btn:disabled::before {
+  background: none;
+}
+
+.submit-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 4rem 0.5rem 1rem; /* Adjusted for mobile */
+  }
+
+  .contact-content {
+    margin-top: 0.5rem;
+  }
+
+  .contact-title {
+    font-size: 2.0rem;
+  }
+
+  .contact-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    min-width: 100px;
+    padding: 0.3rem; /* Reduced padding for mobile */
+  }
+
+  .contact-icon {
+    font-size: 1.2em;
+  }
+
+  .contact-form {
+    padding: 1rem;
+  }
+
+  .form-title {
+    font-size: 1.2em;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .submit-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-title {
+    font-size: 1.5rem;
+  }
+
+  .contact-subtitle {
+    font-size: 1rem;
+  }
+
+  .info-item p {
+    font-size: 0.9rem;
+  }
+
+  .info-item strong {
+    font-size: 1rem;
+  }
+
+  .form-title {
+    font-size: 1em;
+  }
+
+  .form-subtitle {
+    font-size: 0.9em;
+  }
+
+  .form-control {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+
+  .submit-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8em;
+  }
+}

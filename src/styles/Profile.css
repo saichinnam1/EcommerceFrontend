@@ -1,0 +1,99 @@
+
+.profile-container {
+  max-width: 1200px;
+margin-top: 5%;
+
+}
+
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.avatar-text {
+  font-weight: 500;
+  line-height: 1;
+}
+
+
+.nav-pills .nav-link {
+  color: #6c757d;
+  border-radius: 8px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #f8f9fa;
+  color: #2f70d8;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #4d8be8;
+  color: white;
+  box-shadow: 0 2px 5px rgba(13, 110, 253, 0.2);
+}
+
+
+.content-card {
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.content-card .card-header {
+  padding: 16px 24px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+
+.bi-cart-x {
+  opacity: 0.5;
+}
+
+.address-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+
+@media (max-width: 767.98px) {
+  .nav-pills {
+    flex-direction: row !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+  }
+  
+  .nav-pills .nav-link {
+    display: inline-block;
+    margin-right: 8px;
+  }
+}

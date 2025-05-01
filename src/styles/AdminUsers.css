@@ -1,0 +1,128 @@
+.admin-users {
+    padding: 0; /* Remove extra padding, as admin-content already has 25px padding */
+  }
+  
+  .admin-users-table {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+  }
+  
+  .admin-users-table thead {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+  }
+  
+  .admin-users-table th {
+    padding: 6px 8px; /* Further reduced padding */
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 12px; /* Smaller font size */
+    white-space: nowrap;
+  }
+  
+  .admin-users-table td {
+    padding: 6px 8px; /* Further reduced padding */
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 12px; /* Smaller font size */
+    line-height: 1.2; /* Further reduced line height */
+  }
+  
+  /* Specific column width adjustments */
+  .admin-users-table th:nth-child(1),
+  .admin-users-table td:nth-child(1) {
+    width: 8%; /* User ID */
+  }
+  
+  .admin-users-table th:nth-child(2),
+  .admin-users-table td:nth-child(2) {
+    width: 12%; /* Name */
+  }
+  
+  .admin-users-table th:nth-child(3),
+  .admin-users-table td:nth-child(3) {
+    width: 25%; /* Email */
+  }
+  
+  .admin-users-table th:nth-child(4),
+  .admin-users-table td:nth-child(4) {
+    width: 20%; /* Orders */
+  }
+  
+  .admin-users-table th:nth-child(5),
+  .admin-users-table td:nth-child(5) {
+    width: 35%; /* Shipping Address */
+  }
+  
+  /* Handle long content with ellipsis */
+  .admin-users-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .admin-users-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Loading and Error States */
+  .admin-loading,
+  .admin-error {
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  .admin-loading {
+    color: #666;
+  }
+  
+  .admin-error {
+    color: #d32f2f;
+  }
+  
+  .no-users {
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .admin-users-table th,
+    .admin-users-table td {
+      padding: 4px 6px;
+      font-size: 11px;
+    }
+  
+    .admin-users-table th:nth-child(1),
+    .admin-users-table td:nth-child(1) {
+      width: 6%;
+    }
+  
+    .admin-users-table th:nth-child(2),
+    .admin-users-table td:nth-child(2) {
+      width: 10%;
+    }
+  
+    .admin-users-table th:nth-child(3),
+    .admin-users-table td:nth-child(3) {
+      width: 28%;
+    }
+  
+    .admin-users-table th:nth-child(4),
+    .admin-users-table td:nth-child(4) {
+      width: 22%;
+    }
+  
+    .admin-users-table th:nth-child(5),
+    .admin-users-table td:nth-child(5) {
+      width: 34%;
+    }
+  }

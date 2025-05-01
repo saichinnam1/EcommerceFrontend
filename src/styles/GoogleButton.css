@@ -1,0 +1,47 @@
+/* GoogleButton.css */
+.google-auth-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    height: 40px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .google-auth-button:hover {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: rgba(66, 133, 244, 0.04);
+  }
+  
+  .google-auth-button:active {
+    background-color: rgba(66, 133, 244, 0.1);
+  }
+  
+  .google-icon-wrapper {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .google-icon {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .button-text {
+    color: #3c4043;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+  }
