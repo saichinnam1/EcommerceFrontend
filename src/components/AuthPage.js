@@ -37,7 +37,7 @@ const AuthPage = () => {
     }
   }, [navigate]);
 
-  // Check if redirected from OAuth2 success
+  
   useEffect(() => {
     if (window.location.pathname === '/auth/success') {
       handleOAuth2SuccessSubmit();
@@ -75,7 +75,7 @@ const AuthPage = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
       
-      // Save rememberMe preference
+     
       if (loginCredentials.rememberMe) {
         localStorage.setItem('rememberedUser', loginCredentials.username);
       } else {
@@ -129,7 +129,7 @@ const AuthPage = () => {
       return;
     }
     try {
-      // Clear tokens before making the request
+    
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       await createPasswordResetTokenForUser(resetEmail);
@@ -160,7 +160,7 @@ const AuthPage = () => {
             <h2 className="auth-title">Login</h2>
             <form onSubmit={handleLoginSubmit} className="auth-form">
               <div className="form-group">
-                <label>Email/Username</label>
+                <label>Username</label>
                 <input
                   type="text"
                   name="username"
@@ -218,7 +218,7 @@ const AuthPage = () => {
             </form>
           </div>
 
-          {/* Register Form */}
+     
           <div className="auth-form-box">
             <h2 className="auth-title">Create Account</h2>
             <form onSubmit={handleSignupSubmit} className="auth-form">
@@ -288,7 +288,7 @@ const AuthPage = () => {
           </div>
         </div>
 
-        {/* Password Reset Modal with improved styling */}
+       
         <Modal 
           show={showResetModal} 
           onHide={() => setShowResetModal(false)} 
