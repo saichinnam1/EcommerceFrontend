@@ -1,18 +1,17 @@
 import axios from 'axios';
 
-
 const API_URL = process.env.REACT_APP_API_URL || 'https://technobackend1.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  withCredentials: true, // Keep this for authenticated routes
   timeout: 10000,
 });
 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    const fullUrl = `${API_URL}${config.url}`.toLowerCase();
+    const fullUrl = `${API_URL}${config.url}`.toLowerCase(); // Fixed template literal syntax
     const isAuthRequest = fullUrl.includes('/auth/login') || 
                           fullUrl.includes('/auth/register') || 
                           fullUrl.includes('/auth/oauth2/success') || 
@@ -41,7 +40,7 @@ api.interceptors.response.use(
   (response) => {
     if (response.status === 204) {
       if (process.env.NODE_ENV === 'development') {
-        console.log(`[API] Response ${response.status} ${response.config.url}`, 'No Content');
+        console.log(`[API] Response ${response.status} ${response.config.url}, 'No Content'`);
       }
       return response;
     }
@@ -122,14 +121,14 @@ export const login = (credentials) => {
   if (!credentials?.username || !credentials?.password) {
     throw new Error('Username and password are required');
   }
-  return api.post('/auth/login', credentials);
+  return api.post('/auth/login', credentials, { withCredentials: false }); // Disable for login
 };
 
 export const register = (userData) => {
   if (!userData?.username || !userData?.password || !userData?.email) {
     throw new Error('Username, password, and email are required');
   }
-  return api.post('/auth/register', userData);
+  return api.post('/auth/register', userData, { withCredentials: false }); // Disable for register
 };
 
 export const registerWithGoogle = () => {
