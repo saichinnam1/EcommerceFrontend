@@ -4,14 +4,14 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://technobackend1.onrende
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true, // Keep this for authenticated routes
-  timeout: 10000,
+  withCredentials: true,
+  timeout: 10000, // Reduced timeout to 10 seconds
 });
 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    const fullUrl = `${API_URL}${config.url}`.toLowerCase(); // Fixed template literal syntax
+    const fullUrl = `${API_URL}${config.url}`.toLowerCase();
     const isAuthRequest = fullUrl.includes('/auth/login') || 
                           fullUrl.includes('/auth/register') || 
                           fullUrl.includes('/auth/oauth2/success') || 
@@ -97,7 +97,11 @@ api.interceptors.response.use(
     }
 
     let errorMessage;
-    if (error.response?.data?.error) {
+    if (error.code === 'ECONNABORTED') {
+      errorMessage = 'Request timed out. Please check your internet connection or try again later.';
+    } else if (error.response?.status === 401) {
+      errorMessage = 'Unauthorized: Please check your credentials or try again later.';
+    } else if (error.response?.data?.error) {
       errorMessage = error.response.data.error;
     } else if (error.response?.data?.message) {
       errorMessage = error.response.data.message;
@@ -121,14 +125,14 @@ export const login = (credentials) => {
   if (!credentials?.username || !credentials?.password) {
     throw new Error('Username and password are required');
   }
-  return api.post('/auth/login', credentials, { withCredentials: false }); // Disable for login
+  return api.post('/auth/login', credentials, { withCredentials: false });
 };
 
 export const register = (userData) => {
   if (!userData?.username || !userData?.password || !userData?.email) {
     throw new Error('Username, password, and email are required');
   }
-  return api.post('/auth/register', userData, { withCredentials: false }); // Disable for register
+  return api.post('/auth/register', userData, { withCredentials: false });
 };
 
 export const registerWithGoogle = () => {

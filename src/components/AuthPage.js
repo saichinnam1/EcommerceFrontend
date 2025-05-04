@@ -32,12 +32,11 @@ const AuthPage = () => {
       toast.success('Logged in successfully with Google!');
       setTimeout(() => navigate('/'), 1000);
     } catch (error) {
-      console.error('OAuth2 success error:', error.response?.data || error.message);
-      toast.error(`Failed to log in with Google: ${error.response?.data?.message || error.message}`);
+      console.error('OAuth2 success error:', error.message);
+      toast.error(`Failed to log in with Google: ${error.message}`);
     }
   }, [navigate]);
 
-  
   useEffect(() => {
     if (window.location.pathname === '/auth/success') {
       handleOAuth2SuccessSubmit();
@@ -75,7 +74,6 @@ const AuthPage = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
       
-     
       if (loginCredentials.rememberMe) {
         localStorage.setItem('rememberedUser', loginCredentials.username);
       } else {
@@ -87,8 +85,14 @@ const AuthPage = () => {
       toast.success('Logged in successfully!');
       setTimeout(() => navigate('/'), 1000); 
     } catch (error) {
-      console.error('Login error:', error.response?.data || error.message);
-      toast.error(`Failed to log in: ${error.response?.data?.message || error.message}`);
+      console.error('Login error:', error.message);
+      if (error.message.includes('timed out')) {
+        toast.error('Login request timed out. Please check your internet connection or try again later.');
+      } else if (error.message.includes('Unauthorized')) {
+        toast.error('Invalid username or password. Please try again.');
+      } else {
+        toast.error(`Failed to log in: ${error.message}`);
+      }
     }
   };
 
@@ -117,8 +121,14 @@ const AuthPage = () => {
       toast.success('Registered successfully! Sign in now');
       setTimeout(() => navigate('/auth'), 2500); 
     } catch (error) {
-      console.error('Signup error:', error.response?.data || error.message);
-      toast.error(`Failed to register: ${error.response?.data?.message || error.message}`);
+      console.error('Signup error:', error.message);
+      if (error.message.includes('timed out')) {
+        toast.error('Signup request timed out. Please check your internet connection or try again later.');
+      } else if (error.message.includes('Unauthorized')) {
+        toast.error('Unauthorized: Please check your details or try again later.');
+      } else {
+        toast.error(`Failed to register: ${error.message}`);
+      }
     }
   };
 
@@ -129,7 +139,6 @@ const AuthPage = () => {
       return;
     }
     try {
-    
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       await createPasswordResetTokenForUser(resetEmail);
@@ -137,9 +146,14 @@ const AuthPage = () => {
       setResetEmail('');
       setShowResetModal(false);
     } catch (error) {
-      console.error('Reset password error:', error.response?.data || error.message);
-      const errorMessage = error.response?.data?.message || error.message || 'An unexpected error occurred';
-      toast.error(`Failed to send reset email: ${errorMessage}`);
+      console.error('Reset password error:', error.message);
+      if (error.message.includes('timed out')) {
+        toast.error('Reset request timed out. Please check your internet connection or try again later.');
+      } else if (error.message.includes('Unauthorized')) {
+        toast.error('Unauthorized: Please check your email or try again later.');
+      } else {
+        toast.error(`Failed to send reset email: ${error.message}`);
+      }
     }
   };
 
@@ -218,7 +232,6 @@ const AuthPage = () => {
             </form>
           </div>
 
-     
           <div className="auth-form-box">
             <h2 className="auth-title">Create Account</h2>
             <form onSubmit={handleSignupSubmit} className="auth-form">
@@ -288,7 +301,6 @@ const AuthPage = () => {
           </div>
         </div>
 
-       
         <Modal 
           show={showResetModal} 
           onHide={() => setShowResetModal(false)} 
