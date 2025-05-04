@@ -1,11 +1,10 @@
 import axios from 'axios';
-
-const API_URL = process.env.REACT_APP_API_URL || 'https://technobackend1.onrender.com/api';
+import { API_URL, BASE_URL } from '../Config/constants'; // Adjust the path based on your file structure
 
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
-  timeout: 10000, // Reduced timeout to 10 seconds
+  timeout: 10000,
 });
 
 api.interceptors.request.use(
@@ -136,7 +135,7 @@ export const register = (userData) => {
 };
 
 export const registerWithGoogle = () => {
-  window.location.href = `${API_URL.replace('/api', '')}/oauth2/authorization/google`;
+  window.location.href = `${BASE_URL}/oauth2/authorization/google`;
 };
 
 export const handleOAuth2Success = () => {
