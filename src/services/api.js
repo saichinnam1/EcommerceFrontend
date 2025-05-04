@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://technobackend1.onrender.com';
+// Set the base URL to include the /api prefix
+const API_URL = process.env.REACT_APP_API_URL || 'https://technobackend1.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -146,7 +147,7 @@ export const handleOAuth2Success = () => {
     window.history.replaceState({}, document.title, window.location.pathname);
     return Promise.resolve({ data: { token, refreshToken } });
   } else {
-    return api.post('/auth/oauth2/success');
+    return api.post('/api/auth/oauth2/success');
   }
 };
 
