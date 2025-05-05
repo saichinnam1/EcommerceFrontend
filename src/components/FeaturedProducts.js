@@ -3,7 +3,7 @@ import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, getProductsByCategory, addToCart} from '../services/api';
+import { getProducts, getProductsByCategory, addToCart } from '../services/api';
 import api from '../services/api';
 import { API_URL } from '../Config/config';
 import freeShippingImage from '../assets/free-shipping.png';
@@ -28,7 +28,6 @@ const SkeletonLoader = () => (
   </div>
 );
 
-// Component to handle image loading with a placeholder
 const ProductImage = ({ src, alt }) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   const placeholder = '/placeholder.jpg';
@@ -37,7 +36,7 @@ const ProductImage = ({ src, alt }) => {
     width: '85%',
     height: 'auto',
     maxHeight: '90%',
-    objectFit: 'contain'
+    objectFit: 'contain',
   };
 
   return (
@@ -59,9 +58,9 @@ const ProductImage = ({ src, alt }) => {
           e.target.src = placeholder;
           setIsImageLoaded(true);
         }}
-        style={{ 
+        style={{
           ...imageStyles,
-          display: isImageLoaded ? 'block' : 'none'
+          display: isImageLoaded ? 'block' : 'none',
         }}
       />
     </>
@@ -101,7 +100,7 @@ const FeaturedProducts = () => {
       navigate('/login');
       return;
     }
-  
+
     try {
       const cartItem = {
         userId: user.id,
@@ -125,34 +124,22 @@ const FeaturedProducts = () => {
     }
   }, [location]);
 
-  if (isLoading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error-container">
-      <div className="error-message">Failed to load products: {error.message}</div>
-    </div>
-  );
-  if (!products?.length) return (
-    <div className="empty-container">
-      <div className="empty-message">No products available.</div>
-    </div>
-  );
-
-  const displayedProducts = location.pathname === '/' ? products.slice(0, 8) : products;
-
-  return (
-    <div className="container">
-      <div className="featured-header">
-        <h2 className="featured-title">
-          {query
-            ? 'Search Results'
-            : category
-            ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products`
-            : location.pathname === '/products'
-            ? 'All Products'
-            : 'Products'}
-        </h2>
+  const renderProductGrid = () => {
+    if (isLoading) return <SkeletonLoader />;
+    if (error) return (
+      <div className="error-container">
+        <div className="error-message">Failed to load products: {error.message}</div>
       </div>
+    );
+    if (!products?.length) return (
+      <div className="empty-container">
+        <div className="empty-message">No products available.</div>
+      </div>
+    );
 
+    const displayedProducts = location.pathname === '/' ? products.slice(0, 8) : products;
+
+    return (
       <div ref={productGridRef} className="product-grid">
         {displayedProducts.map((product) => (
           <div className="product-item" key={product.id}>
@@ -182,65 +169,89 @@ const FeaturedProducts = () => {
           </div>
         ))}
       </div>
+    );
+  };
 
-      {location.pathname === '/' && (
-        <>
+  const renderHomePageSections = () => {
+    if (location.pathname !== '/') return null;
+
+    return (
+      <>
+        {products?.length > 0 && (
           <div className="view-all-container">
             <Link to="/products" className="view-all-btn">
               View All Products
             </Link>
           </div>
-
-          <div className="info-section">
-            <div className="info-cards">
-              <div className="info-card">
-                <img src={freeShippingImage} alt="Free Shipping" className="info-icon" />
-                <h4>Free Shipping</h4>
-                <p>Our Free shipping policy applies to all orders, regardless of order value or destination.</p>
-              </div>
-              <div className="info-card">
-                <img src={securePaymentImage} alt="Secure Payments" className="info-icon" />
-                <h4>Secure Payments</h4>
-                <p>Your payments are always safe, secure, and protected at all times.</p>
-              </div>
-              <div className="info-card">
-                <img src={supportOnlineImage} alt="Support Online" className="info-icon" />
-                <h4>Support Online 24/7</h4>
-                <p>We are available 24/7 to assist with any questions or issues you may have.</p>
-              </div>
+        )}
+        <div className="info-section">
+          <div className="info-cards">
+            <div className="info-card">
+              <img src={freeShippingImage} alt="Free Shipping" className="info-icon" />
+              <h4>Free Shipping</h4>
+              <p>Our Free shipping policy applies to all orders, regardless of order value or destination.</p>
             </div>
-
-            <div className="newsletter-section">
-              <h3>Join Us & Get Updates</h3>
-              <div className="newsletter-input-group">
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Enter your email"
-                  aria-label="Email"
-                />
-                <button className="subscribe-btn">Subscribe</button>
-              </div>
-              <p className="small-text">
-                Sign up for exclusive offers, latest news and updates
-              </p>
+            <div className="info-card">
+              <img src={securePaymentImage} alt="Secure Payments" className="info-icon" />
+              <h4>Secure Payments</h4>
+              <p>Your payments are always safe, secure, and protected at all times.</p>
+            </div>
+            <div className="info-card">
+              <img src={supportOnlineImage} alt="Support Online" className="info-icon" />
+              <h4>Support Online 24/7</h4>
+              <p>We are available 24/7 to assist with any questions or issues you may have.</p>
             </div>
           </div>
 
-          <footer className="footer-section">
-            <div className="footer-content">
-              <div className="footer-bottom">
-                <p>By Venkata Saikumar Chinnam</p>
-                <p>Founder of Tecno Titans</p>
-                <div className="footer-nav">
-                  <Link to="/about">About</Link> | <Link to="/policy">Privacy Policy</Link> |{' '}
-                  <Link to="/contact">Contact</Link>
-                </div>
+          <div className="newsletter-section">
+            <h3>Join Us & Get Updates</h3>
+            <div className="newsletter-input-group">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter your email"
+                aria-label="Email"
+              />
+              <button className="subscribe-btn">Subscribe</button>
+            </div>
+            <p className="small-text">
+              Sign up for exclusive offers, latest news and updates
+            </p>
+          </div>
+        </div>
+
+        <footer className="footer-section">
+          <div className="footer-content">
+            <div className="footer-bottom">
+              <p>By Venkata Saikumar Chinnam</p>
+              <p>Founder of Tecno Titans</p>
+              <div className="footer-nav">
+                <Link to="/about">About</Link> | <Link to="/policy">Privacy Policy</Link> |{' '}
+                <Link to="/contact">Contact</Link>
               </div>
             </div>
-          </footer>
-        </>
-      )}
+          </div>
+        </footer>
+      </>
+    );
+  };
+
+  return (
+    <div className="container">
+      <div className="featured-header">
+        <h2 className="featured-title">
+          {query
+            ? 'Search Results'
+            : category
+            ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products`
+            : location.pathname === '/products'
+            ? 'All Products'
+            : 'Products'}
+        </h2>
+      </div>
+
+      {renderProductGrid()}
+      {renderHomePageSections()}
     </div>
   );
 };
