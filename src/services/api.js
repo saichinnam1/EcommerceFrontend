@@ -119,6 +119,22 @@ api.interceptors.response.use(
   }
 );
 
+// Utility function to validate/fix S3 image URLs
+export const fixImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return '/placeholder.jpg';
+  
+  // Check if the URL is already in the correct format
+  if (url.includes('s3.eu-north-1.amazonaws.com')) return url;
+  
+  // Check if it's an S3 URL but missing the region
+  if (url.includes('technotitans-product-images.s3.amazonaws.com')) {
+    return url.replace('s3.amazonaws.com', 's3.eu-north-1.amazonaws.com');
+  }
+  
+  // If it's not an S3 URL or is invalid, return the placeholder
+  return url || '/placeholder.jpg';
+};
+
 // Authentication
 export const login = (credentials) => {
   if (!credentials?.username || !credentials?.password) {
@@ -154,16 +170,39 @@ export const handleOAuth2Success = () => {
 };
 
 // Products
-export const getProductById = (id) => {
+export const getProductById = async (id) => {
   if (!id) throw new Error('Product ID is required');
-  return api.get(`/products/${id}`);
+  const response = await api.get(`/products/${id}`);
+  // Fix image URL in the response
+  if (response.data && response.data.imageUrl) {
+    response.data.imageUrl = fixImageUrl(response.data.imageUrl);
+  }
+  return response;
 };
 
-export const getProducts = () => api.get('/products');
+export const getProducts = async () => {
+  const response = await api.get('/products');
+  // Fix image URLs in the response
+  if (response.data && Array.isArray(response.data)) {
+    response.data = response.data.map(product => ({
+      ...product,
+      imageUrl: fixImageUrl(product.imageUrl),
+    }));
+  }
+  return response;
+};
 
-export const searchProducts = (query) => {
+export const searchProducts = async (query) => {
   if (!query) throw new Error('Search query is required');
-  return api.get(`/products/search?query=${encodeURIComponent(query)}`);
+  const response = await api.get(`/products/search?query=${encodeURIComponent(query)}`);
+  // Fix image URLs in the response
+  if (response.data && Array.isArray(response.data)) {
+    response.data = response.data.map(product => ({
+      ...product,
+      imageUrl: fixImageUrl(product.imageUrl),
+    }));
+  }
+  return response;
 };
 
 export const addProduct = (formData) => {
@@ -173,9 +212,17 @@ export const addProduct = (formData) => {
   });
 };
 
-export const getProductsByCategory = (category) => {
+export const getProductsByCategory = async (category) => {
   if (!category) throw new Error('Category is required');
-  return api.get(`/products/category/${category}`);
+  const response = await api.get(`/products/category/${category}`);
+  // Fix image URLs in the response
+  if (response.data && Array.isArray(response.data)) {
+    response.data = response.data.map(product => ({
+      ...product,
+      imageUrl: fixImageUrl(product.imageUrl),
+    }));
+  }
+  return response;
 };
 
 // Cart
@@ -209,9 +256,20 @@ export const removeFromCart = (itemId, userId) => {
   return api.delete(`/cart/remove/${itemId}?userId=${userId}`);
 };
 
-export const getCart = (userId) => {
+export const getCart = async (userId) => {
   if (!userId) throw new Error('User ID is required');
-  return api.get(`/cart/${userId}`);
+  const response = await api.get(`/cart/${userId}`);
+  // Fix image URLs in the cart items
+  if (response.data && response.data.items && Array.isArray(response.data.items)) {
+    response.data.items = response.data.items.map(item => ({
+      ...item,
+      product: item.product ? {
+        ...item.product,
+        imageUrl: fixImageUrl(item.product.imageUrl),
+      } : item.product,
+    }));
+  }
+  return response;
 };
 
 // Orders and Payments
@@ -229,11 +287,25 @@ export const checkout = (request) => {
   return api.post('/orders/checkout', request);
 };
 
-export const getOrders = (userId) => {
+export const getOrders = async (userId) => {
   if (!userId) throw new Error('User ID is required');
   const parsedUserId = parseInt(userId, 10);
   if (isNaN(parsedUserId)) throw new Error('User ID must be a valid integer');
-  return api.get(`/orders/orders/${parsedUserId}`).then((response) => response.data);
+  const response = await api.get(`/orders/orders/${parsedUserId}`);
+  // Fix image URLs in the order items
+  if (response.data && Array.isArray(response.data)) {
+    response.data = response.data.map(order => ({
+      ...order,
+      items: order.items && Array.isArray(order.items) ? order.items.map(item => ({
+        ...item,
+        product: item.product ? {
+          ...item.product,
+          imageUrl: fixImageUrl(item.product.imageUrl),
+        } : item.product,
+      })) : order.items,
+    }));
+  }
+  return response.data;
 };
 
 export const cancelOrder = (orderId) => {

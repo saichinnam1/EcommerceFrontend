@@ -3,44 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getProductById, addToCart, createPaymentIntent } from '../services/api';
-import { API_URL } from '../Config/config';
+import ProductImage from './ProductImage'; // Import the shared component
 import backgroundImage from '../assets/background.jpg';
 import '../styles/ProductDetails.css';
-
-const ProductImage = ({ src, alt }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const placeholder = '/placeholder.jpg';
-
-  return (
-    <>
-      {!isImageLoaded && (
-        <img
-          src={placeholder}
-          className="pd-product-image"
-          alt={alt}
-          style={{ opacity: 0.5 }}
-        />
-      )}
-      <img
-        src={src}
-        className="pd-product-image"
-        alt={alt}
-        onLoad={() => {
-          console.log('Image loaded successfully:', src);
-          setIsImageLoaded(true);
-        }}
-        onError={(e) => {
-          console.error('Failed to load image:', src);
-          e.target.src = placeholder;
-          setIsImageLoaded(true);
-        }}
-        style={{
-          display: isImageLoaded ? 'block' : 'none',
-        }}
-      />
-    </>
-  );
-};
 
 const ProductBenefits = () => {
   return (
@@ -162,7 +127,7 @@ const ProductDetails = () => {
         name: product.name,
         price: product.price,
         quantity,
-        imageUrl: product.imageUrl ? `${API_URL.replace('/api', '')}/uploads/${product.imageUrl}` : '/placeholder.jpg',
+        imageUrl: product.imageUrl || '/placeholder.jpg',
       };
       navigate('/checkout', {
         state: {
@@ -192,9 +157,7 @@ const ProductDetails = () => {
     );
   }
 
-  const imageUrl = product.imageUrl
-    ? `${API_URL.replace('/api', '')}/uploads/${product.imageUrl}`
-    : '/placeholder.jpg';
+  const imageUrl = product.imageUrl || '/placeholder.jpg';
 
   return (
     <div className="pd-page-container" style={{ backgroundImage: `url(${backgroundImage})` }}>
@@ -203,7 +166,11 @@ const ProductDetails = () => {
           <div className="pd-row">
             <div className="pd-col-left">
               <div className="pd-image-container">
-                <ProductImage src={imageUrl} alt={product.name || 'Product Image'} />
+                <ProductImage
+                  src={imageUrl}
+                  alt={product.name || 'Product Image'}
+                  className="pd-product-image"
+                />
                 
                 <div className="pd-product-badges">
                   {product.isNew && <span className="pd-badge pd-badge-new">New</span>}

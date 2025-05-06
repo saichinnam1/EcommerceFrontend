@@ -6,37 +6,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ProductImage from './ProductImage'; // Import the shared component
 import background2 from '../assets/background2.jpg';
 import '../styles/Checkout.css';
 
 const stripePromise = loadStripe('pk_test_51RB9oeAeYqvaA1sJfh20ebWtetw7lB62LzeWMZE95HR56huoRmXnMEDOIe81hyuyofGYQfWlIYoDdxB0rCDk7MQr00k6QwLYGW');
-
-const ProductImage = ({ src, alt }) => {
-  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
-  const placeholder = '/placeholder.jpg';
-
-  return (
-    <>
-      {!isImageLoaded && (
-        <img
-          src={placeholder}
-          alt={alt}
-          style={{ width: '60px', height: '60px', objectFit: 'cover', opacity: 0.5 }}
-        />
-      )}
-      <img
-        src={src}
-        alt={alt}
-        style={{ width: '200px', height: '200px', objectFit: 'cover' }}
-        onLoad={() => setIsImageLoaded(true)}
-        onError={(e) => {
-          e.target.src = placeholder;
-          setIsImageLoaded(true);
-        }}
-      />
-    </>
-  );
-};
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -115,7 +89,6 @@ const CheckoutForm = () => {
     if (paymentIntent) {
       setPaymentIntentId(paymentIntent.id);
 
-      
       await delay(2000);
 
       const request = {
@@ -175,8 +148,13 @@ const CheckoutForm = () => {
                 <div key={index} className="order-item">
                   <div className="product-image">
                     <ProductImage
-                      src={item.imageUrl}
+                      src={item.imageUrl || '/placeholder.jpg'}
                       alt={item.name}
+                      style={{
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'cover',
+                      }}
                     />
                   </div>
                   <div className="item-details">

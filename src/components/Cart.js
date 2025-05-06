@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getCart, updateCart, removeFromCart, createPaymentIntent, getProducts } from '../services/api';
-import { API_URL } from '../Config/config';
+import ProductImage from './ProductImage'; 
 import '../styles/Cart.css';
 
 const EmptyCartIcon = () => (
@@ -15,32 +15,6 @@ const EmptyCartIcon = () => (
   </svg>
 );
 
-const ProductImage = ({ src, alt }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const placeholder = '/placeholder.jpg';
-
-  return (
-    <div className="cart-item-image-container">
-      {!isImageLoaded && (
-        <div className="cart-item-image-placeholder">
-          <div className="loading-pulse"></div>
-        </div>
-      )}
-      <img
-        src={src}
-        className="cart-item-image"
-        alt={alt}
-        onLoad={() => setIsImageLoaded(true)}
-        onError={(e) => {
-          e.target.src = placeholder;
-          setIsImageLoaded(true);
-        }}
-        style={{ opacity: isImageLoaded ? 1 : 0 }}
-      />
-    </div>
-  );
-};
-
 const Cart = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -48,16 +22,14 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // Centralized authentication check
   const isAuthenticated = useCallback(() => {
     const isValid = user && user.id && !isNaN(user.id);
     if (!isValid) {
-      console.warn('Authentication check failed:', user); // Debug invalid user
+      console.warn('Authentication check failed:', user);
     }
     return isValid;
   }, [user]);
 
-  // Dynamic authentication check
   useEffect(() => {
     if (!isAuthenticated()) {
       toast.error('Session expired. Please log in again.');
@@ -65,7 +37,6 @@ const Cart = () => {
     }
   }, [user, navigate, isAuthenticated]);
 
-  // Fetch cart data when user changes
   useEffect(() => {
     if (!isAuthenticated()) {
       toast.error('Please log in to view your cart.');
@@ -75,7 +46,7 @@ const Cart = () => {
 
     const fetchCart = async () => {
       try {
-        console.log('Fetching cart for user:', user); // Debug user on fetch
+        console.log('Fetching cart for user:', user);
         const response = await getCart(user.id);
         const items = response.data.items || [];
         const mappedItems = items.map(item => {
@@ -86,7 +57,7 @@ const Cart = () => {
             name: product.name || 'Unnamed Product',
             price: typeof product.price === 'number' ? product.price : 0,
             quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-            imageUrl: product.imageUrl ? `${API_URL.replace('/api', '')}/Uploads/${product.imageUrl}` : '/placeholder.jpg',
+            imageUrl: product.imageUrl || '/placeholder.jpg',
           };
         }).filter(item => item.id !== null);
 
@@ -99,7 +70,7 @@ const Cart = () => {
               ...item,
               price: serverProduct.price,
               name: serverProduct.name,
-              imageUrl: serverProduct.imageUrl ? `${API_URL.replace('/api', '')}/Uploads/${serverProduct.imageUrl}` : '/placeholder.jpg',
+              imageUrl: serverProduct.imageUrl || '/placeholder.jpg',
             } : null;
           }).filter(item => item !== null);
 
@@ -126,7 +97,7 @@ const Cart = () => {
       navigate('/auth');
       return;
     }
-    console.log('User object before update:', user); // Debug user before update
+    console.log('User object before update:', user);
     if (!user.id) {
       toast.error('Invalid user session. Please log in again.');
       navigate('/auth');
@@ -143,7 +114,7 @@ const Cart = () => {
 
     try {
       const payload = { userId: user.id, itemId: cartId, quantity };
-      console.log('Sending updateCart payload:', payload); // Debug payload
+      console.log('Sending updateCart payload:', payload);
       const response = await updateCart(payload);
       const data = response.data;
 
@@ -168,7 +139,7 @@ const Cart = () => {
           name: product.name || 'Unnamed Product',
           price: typeof product.price === 'number' ? product.price : 0,
           quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-          imageUrl: product.imageUrl ? `${API_URL.replace('/api', '')}/Uploads/${product.imageUrl}` : '/placeholder.jpg',
+          imageUrl: product.imageUrl || '/placeholder.jpg',
         };
       }).filter(item => item.id !== null);
       setCartItems(mappedItems);
@@ -232,7 +203,7 @@ const Cart = () => {
           ...item,
           price: serverProduct.price,
           name: serverProduct.name,
-          imageUrl: serverProduct.imageUrl ? `${API_URL.replace('/api', '')}/Uploads/${serverProduct.imageUrl}` : '/placeholder.jpg',
+          imageUrl: serverProduct.imageUrl || '/placeholder.jpg',
         } : null;
       }).filter(item => item !== null);
 
@@ -318,6 +289,7 @@ const Cart = () => {
                 <ProductImage
                   src={item.imageUrl}
                   alt={item.name}
+                  className="cart-item-image"
                 />
                 
                 <div className="cart-item-content">

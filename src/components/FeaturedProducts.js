@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 import { getProducts, getProductsByCategory, addToCart } from '../services/api';
 import api from '../services/api';
-import { API_URL } from '../Config/config';
+import ProductImage from './ProductImage'; 
 import freeShippingImage from '../assets/free-shipping.png';
 import securePaymentImage from '../assets/secure-payment.png';
 import supportOnlineImage from '../assets/support-online.png';
@@ -28,45 +28,6 @@ const SkeletonLoader = () => (
   </div>
 );
 
-const ProductImage = ({ src, alt }) => {
-  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
-  const placeholder = '/placeholder.jpg';
-
-  const imageStyles = {
-    width: '85%',
-    height: 'auto',
-    maxHeight: '90%',
-    objectFit: 'contain',
-  };
-
-  return (
-    <>
-      {!isImageLoaded && (
-        <img
-          src={placeholder}
-          className="product-image"
-          alt={alt}
-          style={{ ...imageStyles, opacity: 0.5 }}
-        />
-      )}
-      <img
-        src={src}
-        className="product-image"
-        alt={alt}
-        onLoad={() => setIsImageLoaded(true)}
-        onError={(e) => {
-          e.target.src = placeholder;
-          setIsImageLoaded(true);
-        }}
-        style={{
-          ...imageStyles,
-          display: isImageLoaded ? 'block' : 'none',
-        }}
-      />
-    </>
-  );
-};
-
 const FeaturedProducts = () => {
   const { category } = useParams();
   const location = useLocation();
@@ -78,20 +39,25 @@ const FeaturedProducts = () => {
 
   const fetchProducts = async () => {
     if (query) {
-      const response = await api.get(`/search?query=${encodeURIComponent(query)}`);
+      const response = await api.get(`/api/products/search?query=${encodeURIComponent(query)}`);
+      console.log('Search response:', response.data);
       return response.data;
     }
     if (category) {
-      return (await getProductsByCategory(category)).data;
+      const response = await api.get(`/api/products/category/${category}`);
+      console.log('Category response:', response.data);
+      return response.data;
     }
-    return (await getProducts()).data;
+    const response = await api.get('/api/products');
+    console.log('All products response:', response.data);
+    return response.data;
   };
 
   const { data: products, isLoading, error } = useQuery({
     queryKey: ['products', category, query],
     queryFn: fetchProducts,
     retry: 1,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 5 * 60 * 1000, 
   });
 
   const handleAddToCart = async (product) => {
@@ -146,8 +112,15 @@ const FeaturedProducts = () => {
             <div className="product-card">
               <div className="product-image-wrapper">
                 <ProductImage
-                  src={product.imageUrl ? `${API_URL.replace('/api', '')}/Uploads/${product.imageUrl}` : '/placeholder.jpg'}
+                  src={product.imageUrl}
                   alt={product.name || 'Product Image'}
+                  className="product-image"
+                  style={{
+                    width: '85%',
+                    height: 'auto',
+                    maxHeight: '90%',
+                    objectFit: 'contain',
+                  }}
                 />
               </div>
               <div className="product-content">

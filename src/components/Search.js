@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { searchProducts } from '../services/api';
-import { API_URL } from '../Config/config';
+import ProductImage from './ProductImage'; // Import the shared component
 import '../styles/Search.css';
 
 const Search = () => {
@@ -16,7 +16,6 @@ const Search = () => {
     const query = new URLSearchParams(location.search).get('query');
     if (query) {
       setSearchQuery(query);
-      // Only fetch products if the search was explicitly performed
       if (searchPerformed) {
         fetchProducts(query);
       }
@@ -40,7 +39,7 @@ const Search = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      setSearchPerformed(true); // Set searchPerformed to true only on form submission
+      setSearchPerformed(true);
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
       fetchProducts(searchQuery);
     }
@@ -79,8 +78,8 @@ const Search = () => {
         <div className="product-grid">
           {products.map((product) => (
             <div key={product.id} className="product-card">
-              <img
-                src={product.imageUrl ? `${API_URL.replace('/api', '')}/uploads/${product.imageUrl}` : '/placeholder.jpg'}
+              <ProductImage
+                src={product.imageUrl}
                 alt={product.name}
                 className="product-image"
               />
