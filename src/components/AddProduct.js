@@ -9,14 +9,40 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate inputs
+    if (!product.name || !product.description || !product.price || !product.category || !product.file) {
+      alert('All fields are required.');
+      return;
+    }
+    if (product.price <= 0) {
+      alert('Price must be greater than 0.');
+      return;
+    }
+    if (!product.file.type.startsWith('image/')) {
+      alert('Only image files are allowed.');
+      return;
+    }
+    if (product.file.size > 10 * 1024 * 1024) { // 10MB limit
+      alert('File size exceeds 10MB limit.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', product.file);
     formData.append('name', product.name);
     formData.append('description', product.description);
     formData.append('price', product.price);
     formData.append('category', product.category);
-    await addProduct(formData);
-    navigate('/products');
+
+    try {
+      await addProduct(formData);
+      alert('Product added successfully!');
+      navigate('/products');
+    } catch (error) {
+      console.error('Failed to add product:', error.message);
+      alert('Failed to add product: ' + error.message);
+    }
   };
 
   return (

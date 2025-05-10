@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL, BASE_URL } from '../Config/constants'; // Adjust the path based on your file structure
+import { API_URL, BASE_URL } from '../Config/constants';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -250,7 +250,10 @@ export const getUserById = (userId) => {
 };
 
 export const getUsers = () => {
-  return api.get('/auth/admin/users');
+  return api.get('/auth/admin/users').catch((error) => {
+    console.error('[API] Failed to fetch users:', error.message);
+    throw new Error('Failed to fetch users: ' + error.message);
+  });
 };
 
 // Password Reset Functions
