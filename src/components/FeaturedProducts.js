@@ -31,11 +31,6 @@ const ProductImage = ({ src, alt }) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   const placeholder = '/placeholder.jpg';
 
-  // Apply Cloudinary transformation for optimization (resize to 200x200, auto quality)
-  const optimizedSrc = src.includes('cloudinary') 
-    ? `${src.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${src.split('/upload/')[1]}`
-    : src;
-
   return (
     <>
       {!isImageLoaded && (
@@ -47,7 +42,7 @@ const ProductImage = ({ src, alt }) => {
         />
       )}
       <img
-        src={optimizedSrc}
+        src={src}
         className="product-image"
         alt={alt}
         onLoad={() => setIsImageLoaded(true)}

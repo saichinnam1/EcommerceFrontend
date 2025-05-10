@@ -8,7 +8,7 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [imageLoadedStates, setImageLoadedStates] = useState({}); // Track image loading state per item ID
+  const [imageLoadedStates, setImageLoadedStates] = useState({});
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -73,11 +73,6 @@ const OrderDetails = () => {
           const imageUrl = item.product?.imageUrl || '/placeholder.jpg';
           console.log('Image URL:', imageUrl);
 
-          // Apply Cloudinary transformation for optimization (resize to 200x200, auto quality)
-          const optimizedSrc = imageUrl.includes('cloudinary') 
-            ? `${imageUrl.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${imageUrl.split('/upload/')[1]}`
-            : imageUrl;
-
           // Use the item ID as the key for the image loading state
           const isImageLoaded = imageLoadedStates[item.id] || false;
           const handleImageLoad = () => {
@@ -99,7 +94,7 @@ const OrderDetails = () => {
                 />
               )}
               <img
-                src={optimizedSrc}
+                src={imageUrl}
                 className="img-thumbnail me-3"
                 alt={item.product.name}
                 onLoad={handleImageLoad}

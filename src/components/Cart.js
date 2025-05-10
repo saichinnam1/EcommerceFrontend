@@ -18,10 +18,6 @@ const ProductImage = ({ src, alt }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const placeholder = '/placeholder.jpg';
 
-  const optimizedSrc = src.includes('cloudinary') 
-    ? `${src.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${src.split('/upload/')[1]}`
-    : src;
-
   return (
     <div className="cart-item-image-container">
       {!isImageLoaded && (
@@ -30,12 +26,12 @@ const ProductImage = ({ src, alt }) => {
         </div>
       )}
       <img
-        src={optimizedSrc}
+        src={src}
         className="cart-item-image"
         alt={alt}
         onLoad={() => setIsImageLoaded(true)}
         onError={(e) => {
-          console.log('Image failed to load:', src, 'Optimized URL:', optimizedSrc);
+          console.log('Image failed to load:', src);
           e.target.src = placeholder;
           setIsImageLoaded(true);
         }}
@@ -236,11 +232,6 @@ const Cart = () => {
           imageUrl: serverProduct.imageUrl || '/placeholder.jpg',
         } : null;
       }).filter(item => item !== null);
-
-      // if (updatedItems.length === 0) {
-      //   toast.error('No valid items in cart');
-      //   return;
-      // }
 
       setCartItems(updatedCartItems);
 

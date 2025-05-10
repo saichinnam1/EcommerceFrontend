@@ -77,15 +77,11 @@ const Search = () => {
         <div className="product-grid">
           {products.map((product) => {
             const imageUrl = product.imageUrl || '/placeholder.jpg';
-            // Apply Cloudinary transformation for optimization (resize to 200x200, auto quality)
-            const optimizedSrc = imageUrl.includes('cloudinary') 
-              ? `${imageUrl.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${imageUrl.split('/upload/')[1]}`
-              : imageUrl;
 
             return (
               <div key={product.id} className="product-card">
                 <img
-                  src={optimizedSrc}
+                  src={imageUrl}
                   alt={product.name}
                   className="product-image"
                   onError={(e) => { e.target.src = '/placeholder.jpg'; }}
