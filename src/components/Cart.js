@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getCart, updateCart, removeFromCart, createPaymentIntent, getProducts } from '../services/api';
-import ProductImage from './ProductImage'; 
 import '../styles/Cart.css';
 
 const EmptyCartIcon = () => (
@@ -14,6 +13,37 @@ const EmptyCartIcon = () => (
     <line x1="9" y1="18" x2="15" y2="18" stroke="#3B82F6" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 );
+
+const ProductImage = ({ src, alt }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const placeholder = '/placeholder.jpg';
+
+  const optimizedSrc = src.includes('cloudinary') 
+    ? `${src.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${src.split('/upload/')[1]}`
+    : src;
+
+  return (
+    <div className="cart-item-image-container">
+      {!isImageLoaded && (
+        <div className="cart-item-image-placeholder">
+          <div className="loading-pulse"></div>
+        </div>
+      )}
+      <img
+        src={optimizedSrc}
+        className="cart-item-image"
+        alt={alt}
+        onLoad={() => setIsImageLoaded(true)}
+        onError={(e) => {
+          console.log('Image failed to load:', src, 'Optimized URL:', optimizedSrc);
+          e.target.src = placeholder;
+          setIsImageLoaded(true);
+        }}
+        style={{ opacity: isImageLoaded ? 1 : 0 }}
+      />
+    </div>
+  );
+};
 
 const Cart = () => {
   const { user } = useSelector((state) => state.auth);
@@ -207,10 +237,10 @@ const Cart = () => {
         } : null;
       }).filter(item => item !== null);
 
-      if (updatedCartItems.length === 0) {
-        toast.error('No valid items in cart');
-        return;
-      }
+      // if (updatedItems.length === 0) {
+      //   toast.error('No valid items in cart');
+      //   return;
+      // }
 
       setCartItems(updatedCartItems);
 
@@ -289,7 +319,6 @@ const Cart = () => {
                 <ProductImage
                   src={item.imageUrl}
                   alt={item.name}
-                  className="cart-item-image"
                 />
                 
                 <div className="cart-item-content">

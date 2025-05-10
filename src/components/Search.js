@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { searchProducts } from '../services/api';
-import ProductImage from './ProductImage'; // Import the shared component
 import '../styles/Search.css';
 
 const Search = () => {
@@ -76,32 +75,41 @@ const Search = () => {
       )}
       {!loading && products.length > 0 && (
         <div className="product-grid">
-          {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <ProductImage
-                src={product.imageUrl}
-                alt={product.name}
-                className="product-image"
-              />
-              <h3>{product.name}</h3>
-              <p>{product.description.substring(0, 100)}...</p>
-              <p>${product.price}</p>
-              <div className="product-actions">
-                <button
-                  className="view-details-btn"
-                  onClick={() => handleViewDetails(product.id)}
-                >
-                  View Details
-                </button>
-                <button
-                  className="buy-now-btn"
-                  onClick={() => handleBuyNow(product)}
-                >
-                  Buy Now
-                </button>
+          {products.map((product) => {
+            const imageUrl = product.imageUrl || '/placeholder.jpg';
+            // Apply Cloudinary transformation for optimization (resize to 200x200, auto quality)
+            const optimizedSrc = imageUrl.includes('cloudinary') 
+              ? `${imageUrl.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${imageUrl.split('/upload/')[1]}`
+              : imageUrl;
+
+            return (
+              <div key={product.id} className="product-card">
+                <img
+                  src={optimizedSrc}
+                  alt={product.name}
+                  className="product-image"
+                  onError={(e) => { e.target.src = '/placeholder.jpg'; }}
+                />
+                <h3>{product.name}</h3>
+                <p>{product.description.substring(0, 100)}...</p>
+                <p>${product.price}</p>
+                <div className="product-actions">
+                  <button
+                    className="view-details-btn"
+                    onClick={() => handleViewDetails(product.id)}
+                  >
+                    View Details
+                  </button>
+                  <button
+                    className="buy-now-btn"
+                    onClick={() => handleBuyNow(product)}
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

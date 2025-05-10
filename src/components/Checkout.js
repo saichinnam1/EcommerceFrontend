@@ -6,11 +6,52 @@ import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import ProductImage from './ProductImage'; // Import the shared component
 import background2 from '../assets/background2.jpg';
 import '../styles/Checkout.css';
 
 const stripePromise = loadStripe('pk_test_51RB9oeAeYqvaA1sJfh20ebWtetw7lB62LzeWMZE95HR56huoRmXnMEDOIe81hyuyofGYQfWlIYoDdxB0rCDk7MQr00k6QwLYGW');
+
+const ProductImage = ({ src, alt }) => {
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
+  const placeholder = '/placeholder.jpg';
+
+
+  const optimizedSrc = src.includes('cloudinary') 
+    ? `${src.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${src.split('/upload/')[1]}`
+    : src;
+
+  return (
+    <>
+      {!isImageLoaded && (
+        <img
+          src={placeholder}
+          alt={alt}
+          style={{
+            width: '60px',
+            height: '60px',
+            objectFit: 'cover',
+            opacity: 0.5,
+          }}
+        />
+      )}
+      <img
+        src={optimizedSrc}
+        alt={alt}
+        style={{
+          width: '200px',
+          height: '200px',
+          objectFit: 'cover',
+          opacity: isImageLoaded ? 1 : 0,
+        }}
+        onLoad={() => setIsImageLoaded(true)}
+        onError={(e) => {
+          e.target.src = placeholder;
+          setIsImageLoaded(true);
+        }}
+      />
+    </>
+  );
+};
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -150,11 +191,6 @@ const CheckoutForm = () => {
                     <ProductImage
                       src={item.imageUrl || '/placeholder.jpg'}
                       alt={item.name}
-                      style={{
-                        width: '200px',
-                        height: '200px',
-                        objectFit: 'cover',
-                      }}
                     />
                   </div>
                   <div className="item-details">

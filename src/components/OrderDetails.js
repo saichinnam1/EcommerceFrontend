@@ -55,8 +55,6 @@ const OrderDetails = () => {
   if (loading) return <div>Loading...</div>;
   if (!order) return <div>Order not found.</div>;
 
-  const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-
   // Debug the shipmentStatus value
   console.log('Shipment Status:', order.shipmentStatus);
   console.log('Can Cancel:', ['processing', 'packing'].includes(order.shipmentStatus?.toLowerCase()));
@@ -72,10 +70,13 @@ const OrderDetails = () => {
       <ul className="list-group">
         {order.items.map((item) => {
           console.log('Order Item:', item);
-          const imageUrl = item.product?.imageUrl
-            ? `${baseUrl}/uploads/${item.product.imageUrl}`
-            : '/placeholder.jpg';
+          const imageUrl = item.product?.imageUrl || '/placeholder.jpg';
           console.log('Image URL:', imageUrl);
+
+          // Apply Cloudinary transformation for optimization (resize to 200x200, auto quality)
+          const optimizedSrc = imageUrl.includes('cloudinary') 
+            ? `${imageUrl.split('/upload/')[0]}/upload/w_200,h_200,c_fill,q_auto/${imageUrl.split('/upload/')[1]}`
+            : imageUrl;
 
           // Use the item ID as the key for the image loading state
           const isImageLoaded = imageLoadedStates[item.id] || false;
@@ -98,7 +99,7 @@ const OrderDetails = () => {
                 />
               )}
               <img
-                src={imageUrl}
+                src={optimizedSrc}
                 className="img-thumbnail me-3"
                 alt={item.product.name}
                 onLoad={handleImageLoad}

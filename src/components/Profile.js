@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api, { getOrders, getUserById } from '../services/api';
-import ProductImage from './ProductImage';
 import '../styles/Profile.css';
 
 const Profile = () => {
@@ -296,63 +295,50 @@ const Profile = () => {
                 </button>
               </div>
             ) : (
-              <div className="orders-list">
-                {orders.map((order) => (
-                  <div key={order.id} className="order-item mb-4 border rounded p-3">
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div>
-                        <span className="fw-medium">Order #{order.id}</span>
-                        <p className="text-muted mb-0">{formatDate(order.orderDate)}</p>
-                      </div>
-                      <div>
-                        <span className={getStatusBadgeClass(order.status)}>
-                          {order.status}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="order-items">
-                      {order.items && order.items.length > 0 ? (
-                        order.items.map((item) => (
-                          <div key={item.id} className="d-flex align-items-center mb-2">
-                            <ProductImage
-                              src={item.product?.imageUrl}
-                              alt={item.product?.name || 'Product Image'}
-                              className="order-item-image me-3"
-                              style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                            />
-                            <div>
-                              <p className="mb-0 fw-medium">{item.product?.name || 'Unnamed Product'}</p>
-                              <p className="text-muted mb-0">
-                                ${item.price?.toFixed(2)} x {item.quantity}
-                              </p>
-                            </div>
+              <div className="table-responsive">
+                <table className="table table-hover align-middle">
+                  <thead className="table-light">
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order.id}>
+                        <td><span className="fw-medium">#{order.id}</span></td>
+                        <td>{formatDate(order.orderDate)}</td>
+                        <td><span className="fw-medium">${order.total.toFixed(2)}</span></td>
+                        <td>
+                          <span className={getStatusBadgeClass(order.status)}>
+                            {order.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="d-flex gap-2">
+                            <button
+                              className="btn btn-sm btn-outline-primary"
+                              onClick={() => handleViewDetails(order.id)}
+                            >
+                              Details
+                            </button>
+                            {order.status.toLowerCase() === 'processing' && (
+                              <button
+                                className="btn btn-sm btn-outline-danger"
+                                onClick={() => handleCancelOrder(order.id)}
+                              >
+                                Cancel
+                              </button>
+                            )}
                           </div>
-                        ))
-                      ) : (
-                        <p className="text-muted">No items in this order.</p>
-                      )}
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center mt-3">
-                      <p className="fw-medium mb-0">Total: ${order.total.toFixed(2)}</p>
-                      <div className="d-flex gap-2">
-                        <button
-                          className="btn btn-sm btn-outline-primary"
-                          onClick={() => handleViewDetails(order.id)}
-                        >
-                          Details
-                        </button>
-                        {order.status.toLowerCase() === 'processing' && (
-                          <button
-                            className="btn btn-sm btn-outline-danger"
-                            onClick={() => handleCancelOrder(order.id)}
-                          >
-                            Cancel
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
