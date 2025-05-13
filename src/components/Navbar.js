@@ -124,10 +124,7 @@ const Navbar = () => {
                 <i className="bi bi-bag"></i>
                 <span>Cart</span>
               </Link>
-              <Link to="/search" className="mobile-nav-link">
-                <i className="bi bi-search"></i>
-                <span>Search</span>
-              </Link>
+              {/* Removed search link from mobile menu since it's now outside */}
               <button className="mobile-nav-link mobile-logout" onClick={handleLogout}>
                 <i className="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
@@ -139,10 +136,7 @@ const Navbar = () => {
                 <i className="bi bi-box-arrow-in-right"></i>
                 <span>Login/Signup</span>
               </Link>
-              <Link to="/search" className="mobile-nav-link">
-                <i className="bi bi-search"></i>
-                <span>Search</span>
-              </Link>
+              {/* Removed search link from mobile menu since it's now outside */}
             </>
           )}
         </nav>
