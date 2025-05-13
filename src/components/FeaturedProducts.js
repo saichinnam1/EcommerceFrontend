@@ -67,6 +67,15 @@ const FeaturedProducts = () => {
   const query = searchParams.get('query');
   const productGridRef = useRef(null);
 
+  // Map lowercase category to display name
+  const categoryDisplayNames = {
+    laptop: 'Laptop',
+    phone: 'Phone',
+    camera: 'Camera',
+    headphone: 'Headphone',
+    videogame: 'Video Game',
+  };
+
   const fetchProducts = async () => {
     if (query) {
       const response = await api.get(`/search?query=${encodeURIComponent(query)}`);
@@ -82,7 +91,7 @@ const FeaturedProducts = () => {
     queryKey: ['products', category, query],
     queryFn: fetchProducts,
     retry: 1,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 5 * 60 * 1000, 
   });
 
   const handleAddToCart = async (product) => {
@@ -110,9 +119,8 @@ const FeaturedProducts = () => {
   };
 
   useEffect(() => {
-    // Scroll to top for both /products and category routes
     if (location.pathname === '/products' || location.pathname.startsWith('/category/')) {
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Changed top value to 0 to scroll to the very top
+      window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
   }, [location]);
 
@@ -235,7 +243,7 @@ const FeaturedProducts = () => {
           {query
             ? 'Search Results'
             : category
-            ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products`
+            ? `${categoryDisplayNames[category] || (category.charAt(0).toUpperCase() + category.slice(1))} Products`
             : location.pathname === '/products'
             ? 'All Products'
             : 'Products'}
