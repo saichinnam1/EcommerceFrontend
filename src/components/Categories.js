@@ -10,7 +10,7 @@ const Categories = () => {
     { name: 'Phone', icon: faMobileAlt, color: '#4CAF50', path: '/category/phone' },
     { name: 'Camera', icon: faCamera, color: '#f56565', path: '/category/camera' },
     { name: 'Headphone', icon: faHeadphones, color: '#9f7aea', path: '/category/headphone' },
-    { name: 'Video Game', icon: faGamepad, color: '#ecc94b', path: '/category/video-game' },
+    { name: 'Video Game', icon: faGamepad, color: '#ecc94b', path: '/category/videogame' },
   ];
 
   return (
