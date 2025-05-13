@@ -68,6 +68,10 @@ const Navbar = () => {
         <div className="navbar-right">
           {isAuthenticated ? (
             <>
+              <Link to="/search" className="nav-action-link search-link">
+                <i className="bi bi-search"></i>
+                <span>Search</span>
+              </Link>
               <Link to="/profile" className="nav-action-link">
                 <i className="bi bi-person-circle"></i>
                 <span>Profile</span>
@@ -76,10 +80,6 @@ const Navbar = () => {
                 <i className="bi bi-bag"></i>
                 <span>Cart</span>
               </Link>
-              <Link to="/search" className="nav-action-link search-link">
-                <i className="bi bi-search"></i>
-                <span>Search</span>
-              </Link>
               <button className="nav-action-link logout-btn" onClick={handleLogout}>
                 <i className="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
@@ -87,13 +87,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/auth" className="login-btn">
-                <i className="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
-              </Link>
               <Link to="/search" className="nav-action-link search-link">
                 <i className="bi bi-search"></i>
                 <span>Search</span>
+              </Link>
+              <Link to="/auth" className="login-btn">
+                <i className="bi bi-box-arrow-in-right"></i>
+                <span>Login</span>
               </Link>
             </>
           )}
