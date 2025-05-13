@@ -387,6 +387,7 @@ body.menu-open {
   .navbar-container {
     padding: 0 1rem;
     height: 60px;
+    justify-content: flex-start;
   }
   
   .desktop-nav {
@@ -394,32 +395,30 @@ body.menu-open {
   }
   
   .navbar-right {
-    gap: 0.5rem; /* Reduced gap for mobile */
-    display: flex; /* Ensure flex layout */
-    align-items: center; /* Vertically center the search button */
-    margin-left: auto; /* Push .navbar-right to the right, next to .menu-toggle */
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 0;
   }
   
-  /* Ensure only the search link is visible in mobile view */
   .navbar-right .nav-action-link:not(.search-link),
   .navbar-right .login-btn {
     display: none;
   }
   
-  /* Style the search link as symbol-only in mobile view */
   .navbar-right .search-link {
     padding: 0.5rem;
     background: none;
     border: none;
-    margin-right: 0.25rem; /* Reduce the gap between search button and menu toggle */
+    margin-right: 0;
   }
   
   .navbar-right .search-link span {
-    display: none; /* Hide the "Search" text */
+    display: none;
   }
   
   .navbar-right .search-link i {
-    font-size: 1.5rem; /* Larger icon for better touch target */
+    font-size: 1.5rem;
     color: #fff;
   }
   
@@ -431,11 +430,13 @@ body.menu-open {
     display: block;
     position: relative;
     z-index: 1001;
-    margin-right: 0.5rem;
+    padding: 0.5rem;
+    margin-left: 0;
+    margin-right: 1rem;
   }
   
   .navbar-center {
-    display: none; 
+    display: none;
   }
   
   .navbar-wrapper {
@@ -448,6 +449,11 @@ body.menu-open {
   
   .mobile-menu {
     padding-bottom: env(safe-area-inset-bottom, 2rem);
+  }
+  
+ 
+  body {
+    padding-top: 5rem;
   }
 }
 
