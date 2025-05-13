@@ -451,9 +451,9 @@ body.menu-open {
     padding-bottom: env(safe-area-inset-bottom, 2rem);
   }
   
- 
+  /* Increase body padding in mobile view with px and !important */
   body {
-    padding-top: 5rem;
+    padding-top: 100px !important; /* Use px to avoid rem issues, increase to 100px for larger buffer */
   }
 }
 
