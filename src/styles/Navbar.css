@@ -297,7 +297,7 @@
 }
 
 body {
-  padding-top: 4rem;
+  padding-top: 4.5rem;
 }
 
 body.menu-open {
@@ -395,6 +395,9 @@ body.menu-open {
   
   .navbar-right {
     gap: 0.5rem; /* Reduced gap for mobile */
+    display: flex; /* Ensure flex layout */
+    align-items: center; /* Vertically center the search button */
+    margin-left: auto; /* Push .navbar-right to the right, next to .menu-toggle */
   }
   
   /* Ensure only the search link is visible in mobile view */
@@ -408,6 +411,7 @@ body.menu-open {
     padding: 0.5rem;
     background: none;
     border: none;
+    margin-right: 0.25rem; /* Reduce the gap between search button and menu toggle */
   }
   
   .navbar-right .search-link span {
