@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import  '../styles/Banner.css'
-
+import '../styles/Banner.css';
 
 import banner1 from '../assets/banner1.webp';
 import banner2 from '../assets/banner2.avif';
@@ -11,6 +10,8 @@ const Banner = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   
   const banners = [
     {
@@ -45,7 +46,7 @@ const Banner = () => {
     }
   ];
   
-  
+  // Handle automatic rotation
   const rotateSlide = useCallback(() => {
     if (!isTransitioning) {
       setIsTransitioning(true);
@@ -60,12 +61,11 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, [rotateSlide]);
   
+  // Handle navigation
   const handleViewDetails = (index) => {
     if (banners[index].type === 'full' && banners[index].id === 8) {
-      
       navigate('/products');
     } else {
-      
       navigate(`/product/${banners[index].id}`);
     }
   };
@@ -90,8 +90,37 @@ const Banner = () => {
     }
   };
   
+  // Touch handlers for swipe
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchEnd = () => {
+    if (!isTransitioning) {
+      if (touchStart - touchEnd > 75) {
+        // Swipe left
+        handleNavClick('next');
+      }
+      
+      if (touchEnd - touchStart > 75) {
+        // Swipe right
+        handleNavClick('prev');
+      }
+    }
+    // Reset values
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+  
   return (
-    <div className="modern-banner">
+    <div className="modern-banner"
+         onTouchStart={handleTouchStart}
+         onTouchMove={handleTouchMove}
+         onTouchEnd={handleTouchEnd}>
       <div className="banner-full">
         <img 
           src={banners[currentSlide].src} 
@@ -112,7 +141,7 @@ const Banner = () => {
                 className="shop-btn" 
                 onClick={() => handleViewDetails(currentSlide)}
               >
-                {banners[currentSlide].buttonText || 'Shop Now'} →
+                {banners[currentSlide].buttonText} →
               </button>
             </div>
           </div>
