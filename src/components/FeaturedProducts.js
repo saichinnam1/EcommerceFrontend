@@ -110,8 +110,9 @@ const FeaturedProducts = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === '/products') {
-      window.scrollTo({ top: 7, behavior: 'smooth' });
+    // Scroll to top for both /products and category routes
+    if (location.pathname === '/products' || location.pathname.startsWith('/category/')) {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Changed top value to 0 to scroll to the very top
     }
   }, [location]);
 
