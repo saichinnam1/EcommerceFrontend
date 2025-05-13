@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { addProduct } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/AddProduct.css';
 
 const AddProduct = () => {
@@ -37,7 +39,7 @@ const AddProduct = () => {
 
     try {
       await addProduct(formData);
-      alert('Product added successfully!');
+      toast.success('Product added successfully!');
       navigate('/products');
     } catch (error) {
       console.error('Failed to add product:', error.message);
@@ -83,11 +85,11 @@ const AddProduct = () => {
             onChange={(e) => setProduct({ ...product, category: e.target.value })}
           >
             <option value="">Select Category</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Phone">Phone</option>
-            <option value="Camera">Camera</option>
-            <option value="Headphone">Headphone</option>
-            <option value="Video Game">Video Game</option>
+            <option value="laptop">Laptop</option>
+            <option value="phone">Phone</option>
+            <option value="camera">Camera</option>
+            <option value="headphone">Headphone</option>
+            <option value="videogame">Video Game</option>
           </select>
         </div>
         <div className="form-group">
@@ -100,6 +102,7 @@ const AddProduct = () => {
         </div>
         <button type="submit" className="btn-primary">Add Product</button>
       </form>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
