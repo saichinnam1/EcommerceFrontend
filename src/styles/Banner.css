@@ -211,7 +211,7 @@
 @media (max-width: 992px) {
   .modern-banner, .banner-full {
     min-height: 350px; 
-    margin-top: 70px;
+    margin-top: 20px; /* Reduced from 70px */
   }
  
   .banner-content {
@@ -239,7 +239,7 @@
 @media (max-width: 768px) {
   .modern-banner, .banner-full {
     min-height: 300px;
-    margin-top: 70px;
+    margin-top: 20px; /* Reduced from 70px */
   }
   
   .banner-content h1 {
@@ -263,7 +263,6 @@
     font-size: 20px;
   }
   
-  /* Stronger background gradient on mobile for better text readability */
   .banner-overlay {
     background: linear-gradient(90deg, 
       rgba(15, 30, 56, 0.95) 0%, 
@@ -271,7 +270,6 @@
       rgba(15, 30, 56, 0.7) 100%);
   }
   
-  /* Make navigation buttons more touch-friendly */
   .nav-btn {
     opacity: 0.8;
   }
@@ -293,6 +291,7 @@
 @media (max-width: 576px) {
   .modern-banner, .banner-full {
     min-height: 280px;
+    margin-top: 20px; /* Reduced from 70px */
   }
   
   .banner-content h1 {
@@ -322,7 +321,6 @@
     max-width: 100%;
   }
   
-  /* Stronger background on very small screens */
   .banner-overlay {
     background: linear-gradient(90deg, 
       rgba(15, 30, 56, 0.98) 0%, 
@@ -345,7 +343,6 @@
     align-items: center;
   }
   
-  /* Adjust dots for better touch */
   .banner-indicators {
     gap: 8px;
   }
@@ -360,10 +357,10 @@
   }
 }
 
-/* Additional media query for very small mobile screens */
 @media (max-width: 400px) {
   .modern-banner, .banner-full {
     min-height: 250px;
+    margin-top: 20px; /* Reduced from 70px */
   }
   
   .banner-content h1 {
@@ -391,7 +388,6 @@
     padding: 0 15px;
   }
   
-  /* Make sure navigation doesn't get in the way of content */
   .prev-btn {
     left: 10px;
   }
@@ -400,7 +396,6 @@
     right: 10px;
   }
   
-  /* Ensure indicators don't overflow on tiny screens */
   .banner-indicators {
     bottom: 10px;
     gap: 8px;
@@ -416,10 +411,10 @@
   }
 }
 
-/* Support for landscape orientation on mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .modern-banner, .banner-full {
     min-height: 220px;
+    margin-top: 20px; /* Reduced from 70px */
   }
   
   .banner-content {
