@@ -1,3 +1,9 @@
+/* Reset global styles to ensure no unwanted margins/padding */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .modern-banner {
   width: 100%;
   position: relative;
@@ -211,12 +217,15 @@
 @media (max-width: 992px) {
   .modern-banner, .banner-full {
     min-height: 350px; 
-    margin-top: 0px; /* Set to 0px to remove gap */
+    margin-top: 0px; /* Ensure no gap */
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
  
-  .nav-bar-wrapper {
-    margin-bottom: 0; /* Ensure navbar doesn't add extra space below */
-    padding-bottom: 0;
+  .nav-bar-wrapper, .nav-bar-container {
+    margin-bottom: 0 !important; /* Force remove any bottom margin */
+    padding-bottom: 0 !important; /* Force remove any bottom padding */
   }
 
   .banner-content {
@@ -244,12 +253,15 @@
 @media (max-width: 768px) {
   .modern-banner, .banner-full {
     min-height: 300px;
-    margin-top: 0px; /* Set to 0px to remove gap */
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   
-  .nav-bar-wrapper {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  .nav-bar-wrapper, .nav-bar-container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .banner-content h1 {
@@ -301,12 +313,15 @@
 @media (max-width: 576px) {
   .modern-banner, .banner-full {
     min-height: 280px;
-    margin-top: 0px; /* Set to 0px to remove gap */
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   
-  .nav-bar-wrapper {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  .nav-bar-wrapper, .nav-bar-container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .banner-content h1 {
@@ -375,12 +390,15 @@
 @media (max-width: 400px) {
   .modern-banner, .banner-full {
     min-height: 250px;
-    margin-top: 0px; /* Set to 0px to remove gap */
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   
-  .nav-bar-wrapper {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  .nav-bar-wrapper, .nav-bar-container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .banner-content h1 {
@@ -434,12 +452,15 @@
 @media (max-height: 500px) and (orientation: landscape) {
   .modern-banner, .banner-full {
     min-height: 220px;
-    margin-top: 0px; /* Set to 0px to remove gap */
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   
-  .nav-bar-wrapper {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  .nav-bar-wrapper, .nav-bar-container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .banner-content {
