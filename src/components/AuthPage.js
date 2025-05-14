@@ -225,7 +225,7 @@ const AuthPage = () => {
                     className="password-toggle" 
                     onClick={toggleLoginPasswordVisibility}
                   >
-                    {showLoginPassword ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
+                    {showLoginPassword ? "👁️" : "👁️‍🗨️"}
                   </button>
                 </div>
               </div>
@@ -244,7 +244,7 @@ const AuthPage = () => {
                     Remember me
                   </label>
                 </div>
-                <a href="#reset" onClick={(e) => {e.preventDefault(); setShowResetModal(true);}} className="forgot-password">
+                <a href="#reset" onClick={() => setShowResetModal(true)} className="forgot-password">
                   Forgot Password?
                 </a>
               </div>
@@ -303,7 +303,7 @@ const AuthPage = () => {
                     className="password-toggle" 
                     onClick={toggleSignupPasswordVisibility}
                   >
-                    {showSignupPassword ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
+                    {showSignupPassword ? "👁️" : "👁️‍🗨️"}
                   </button>
                 </div>
               </div>
