@@ -223,9 +223,22 @@ html, body {
     padding-bottom: 0;
   }
  
-  .nav-bar-wrapper, .nav-bar-container {
+  .nav-bar-wrapper, 
+  .nav-bar-container,
+  .nav-bar-left,
+  .nav-bar-right,
+  .nav-bar,
+  .mobile-nav {
     margin-bottom: 0 !important; /* Force remove any bottom margin */
     padding-bottom: 0 !important; /* Force remove any bottom padding */
+    line-height: normal !important; /* Prevent line-height from adding space */
+  }
+
+  /* Ensure navbar positioning doesn't add space */
+  .nav-bar-wrapper {
+    position: relative; /* Override any fixed/sticky positioning if needed */
+    top: 0;
+    bottom: auto;
   }
 
   .banner-content {
@@ -259,9 +272,21 @@ html, body {
     padding-bottom: 0;
   }
   
-  .nav-bar-wrapper, .nav-bar-container {
+  .nav-bar-wrapper, 
+  .nav-bar-container,
+  .nav-bar-left,
+  .nav-bar-right,
+  .nav-bar,
+  .mobile-nav {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    line-height: normal !important;
+  }
+
+  .nav-bar-wrapper {
+    position: relative;
+    top: 0;
+    bottom: auto;
   }
 
   .banner-content h1 {
@@ -319,9 +344,21 @@ html, body {
     padding-bottom: 0;
   }
   
-  .nav-bar-wrapper, .nav-bar-container {
+  .nav-bar-wrapper, 
+  .nav-bar-container,
+  .nav-bar-left,
+  .nav-bar-right,
+  .nav-bar,
+  .mobile-nav {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    line-height: normal !important;
+  }
+
+  .nav-bar-wrapper {
+    position: relative;
+    top: 0;
+    bottom: auto;
   }
 
   .banner-content h1 {
@@ -396,9 +433,21 @@ html, body {
     padding-bottom: 0;
   }
   
-  .nav-bar-wrapper, .nav-bar-container {
+  .nav-bar-wrapper, 
+  .nav-bar-container,
+  .nav-bar-left,
+  .nav-bar-right,
+  .nav-bar,
+  .mobile-nav {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    line-height: normal !important;
+  }
+
+  .nav-bar-wrapper {
+    position: relative;
+    top: 0;
+    bottom: auto;
   }
 
   .banner-content h1 {
@@ -458,9 +507,21 @@ html, body {
     padding-bottom: 0;
   }
   
-  .nav-bar-wrapper, .nav-bar-container {
+  .nav-bar-wrapper, 
+  .nav-bar-container,
+  .nav-bar-left,
+  .nav-bar-right,
+  .nav-bar,
+  .mobile-nav {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    line-height: normal !important;
+  }
+
+  .nav-bar-wrapper {
+    position: relative;
+    top: 0;
+    bottom: auto;
   }
 
   .banner-content {
