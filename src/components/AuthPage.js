@@ -6,6 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import '../styles/AuthPage.css';
 
 const AuthPage = () => {
+  const [activeTab, setActiveTab] = useState('login');
   const [loginCredentials, setLoginCredentials] = useState({
     username: '',
     password: '',
@@ -168,26 +169,48 @@ const AuthPage = () => {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <div className="auth-forms-wrapper">
-      
-          <div className="auth-form-box">
-            <h2 className="auth-title">Login</h2>
+        <div className="auth-logo">
+          <h1>Welcome Back</h1>
+          <p>Login to your account or create a new one</p>
+        </div>
+        
+        <div className="auth-tabs">
+          <button 
+            className={`tab-btn ${activeTab === 'login' ? 'active' : ''}`} 
+            onClick={() => setActiveTab('login')}
+          >
+            Login
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'signup' ? 'active' : ''}`} 
+            onClick={() => setActiveTab('signup')}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <div className="auth-form-container">
+          {activeTab === 'login' ? (
             <form onSubmit={handleLoginSubmit} className="auth-form">
               <div className="form-group">
                 <label>Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  value={loginCredentials.username}
-                  onChange={handleLoginInputChange}
-                  className="form-control"
-                  placeholder="Enter your Username"
-                  required
-                />
+                <div className="input-icon-wrapper">
+                  <i className="input-icon far fa-user"></i>
+                  <input
+                    type="text"
+                    name="username"
+                    value={loginCredentials.username}
+                    onChange={handleLoginInputChange}
+                    className="form-control"
+                    placeholder="Enter your Username"
+                    required
+                  />
+                </div>
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <div className="password-field">
+                <div className="input-icon-wrapper">
+                  <i className="input-icon fas fa-lock"></i>
                   <input
                     type={showLoginPassword ? "text" : "password"}
                     name="password"
@@ -230,38 +253,42 @@ const AuthPage = () => {
                 Login
               </button>
             </form>
-          </div>
-
-          <div className="auth-form-box">
-            <h2 className="auth-title">Create Account</h2>
+          ) : (
             <form onSubmit={handleSignupSubmit} className="auth-form">
               <div className="form-group">
                 <label>Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  value={signupCredentials.username}
-                  onChange={handleSignupInputChange}
-                  className="form-control"
-                  placeholder="Choose a username"
-                  required
-                />
+                <div className="input-icon-wrapper">
+                  <i className="input-icon far fa-user"></i>
+                  <input
+                    type="text"
+                    name="username"
+                    value={signupCredentials.username}
+                    onChange={handleSignupInputChange}
+                    className="form-control"
+                    placeholder="Choose a username"
+                    required
+                  />
+                </div>
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={signupCredentials.email}
-                  onChange={handleSignupInputChange}
-                  className="form-control"
-                  placeholder="Enter your email"
-                  required
-                />
+                <div className="input-icon-wrapper">
+                  <i className="input-icon far fa-envelope"></i>
+                  <input
+                    type="email"
+                    name="email"
+                    value={signupCredentials.email}
+                    onChange={handleSignupInputChange}
+                    className="form-control"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <div className="password-field">
+                <div className="input-icon-wrapper">
+                  <i className="input-icon fas fa-lock"></i>
                   <input
                     type={showSignupPassword ? "text" : "password"}
                     name="password"
@@ -298,46 +325,12 @@ const AuthPage = () => {
                 Sign Up
               </button>
             </form>
+          )}
+          
+          <div className="separator">
+            <span>or</span>
           </div>
-        </div>
-
-        <Modal 
-          show={showResetModal} 
-          onHide={() => setShowResetModal(false)} 
-          centered
-          className="password-reset-modal"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Reset Password</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p className="reset-instructions">
-              Enter your email address below. We'll send you a link to reset your password.
-            </p>
-            <form onSubmit={handleResetPassword} className="reset-form">
-              <div className="form-group">
-                <input
-                  type="email"
-                  className="form-control"
-                  value={resetEmail}
-                  onChange={(e) => setResetEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
-              <div className="reset-buttons">
-                <Button variant="secondary" onClick={() => setShowResetModal(false)} className="cancel-btn">
-                  Cancel
-                </Button>
-                <Button variant="primary" type="submit" className="reset-submit-btn">
-                  Send Reset Link
-                </Button>
-              </div>
-            </form>
-          </Modal.Body>
-        </Modal>
-
-        <div className="google-btn-container">
+          
           <button
             type="button"
             className="btn btn-google"
@@ -347,7 +340,55 @@ const AuthPage = () => {
             Continue with Google
           </button>
         </div>
+        
+        {/* Mobile view signup prompt */}
+        <div className="mobile-alt-option">
+          {activeTab === 'login' ? (
+            <p>Don't have an account? <button onClick={() => setActiveTab('signup')} className="text-btn">Sign Up</button></p>
+          ) : (
+            <p>Already have an account? <button onClick={() => setActiveTab('login')} className="text-btn">Login</button></p>
+          )}
+        </div>
       </div>
+      
+      <Modal 
+        show={showResetModal} 
+        onHide={() => setShowResetModal(false)} 
+        centered
+        className="password-reset-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Reset Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="reset-instructions">
+            Enter your email address below. We'll send you a link to reset your password.
+          </p>
+          <form onSubmit={handleResetPassword} className="reset-form">
+            <div className="form-group">
+              <div className="input-icon-wrapper">
+                <i className="input-icon far fa-envelope"></i>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
+            <div className="reset-buttons">
+              <Button variant="secondary" onClick={() => setShowResetModal(false)} className="cancel-btn">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" className="reset-submit-btn">
+                Send Reset Link
+              </Button>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
