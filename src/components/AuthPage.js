@@ -193,10 +193,13 @@ const AuthPage = () => {
           {activeTab === 'login' ? (
             <form onSubmit={handleLoginSubmit} className="auth-form">
               <div className="form-group">
-                <label>Username</label>
-                <div className="input-icon-wrapper">
-                  <i className="input-icon far fa-user"></i>
+                <label htmlFor="login-username">Username</label>
+                <div className="input-group">
+                  <div className="input-icon-container">
+                    <i className="fa fa-user"></i>
+                  </div>
                   <input
+                    id="login-username"
                     type="text"
                     name="username"
                     value={loginCredentials.username}
@@ -208,10 +211,13 @@ const AuthPage = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label>Password</label>
-                <div className="input-icon-wrapper">
-                  <i className="input-icon fas fa-lock"></i>
+                <label htmlFor="login-password">Password</label>
+                <div className="input-group">
+                  <div className="input-icon-container">
+                    <i className="fa fa-lock"></i>
+                  </div>
                   <input
+                    id="login-password"
                     type={showLoginPassword ? "text" : "password"}
                     name="password"
                     value={loginCredentials.password}
@@ -224,6 +230,7 @@ const AuthPage = () => {
                     type="button" 
                     className="password-toggle" 
                     onClick={toggleLoginPasswordVisibility}
+                    aria-label={showLoginPassword ? "Hide password" : "Show password"}
                   >
                     {showLoginPassword ? "👁️" : "👁️‍🗨️"}
                   </button>
@@ -244,9 +251,13 @@ const AuthPage = () => {
                     Remember me
                   </label>
                 </div>
-                <a href="#reset" onClick={() => setShowResetModal(true)} className="forgot-password">
+                <button 
+                  type="button" 
+                  onClick={() => setShowResetModal(true)} 
+                  className="forgot-password"
+                >
                   Forgot Password?
-                </a>
+                </button>
               </div>
               
               <button type="submit" className="btn btn-primary login-btn">
@@ -256,10 +267,13 @@ const AuthPage = () => {
           ) : (
             <form onSubmit={handleSignupSubmit} className="auth-form">
               <div className="form-group">
-                <label>Username</label>
-                <div className="input-icon-wrapper">
-                  <i className="input-icon far fa-user"></i>
+                <label htmlFor="signup-username">Username</label>
+                <div className="input-group">
+                  <div className="input-icon-container">
+                    <i className="fa fa-user"></i>
+                  </div>
                   <input
+                    id="signup-username"
                     type="text"
                     name="username"
                     value={signupCredentials.username}
@@ -271,10 +285,13 @@ const AuthPage = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label>Email</label>
-                <div className="input-icon-wrapper">
-                  <i className="input-icon far fa-envelope"></i>
+                <label htmlFor="signup-email">Email</label>
+                <div className="input-group">
+                  <div className="input-icon-container">
+                    <i className="fa fa-envelope"></i>
+                  </div>
                   <input
+                    id="signup-email"
                     type="email"
                     name="email"
                     value={signupCredentials.email}
@@ -286,10 +303,13 @@ const AuthPage = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label>Password</label>
-                <div className="input-icon-wrapper">
-                  <i className="input-icon fas fa-lock"></i>
+                <label htmlFor="signup-password">Password</label>
+                <div className="input-group">
+                  <div className="input-icon-container">
+                    <i className="fa fa-lock"></i>
+                  </div>
                   <input
+                    id="signup-password"
                     type={showSignupPassword ? "text" : "password"}
                     name="password"
                     value={signupCredentials.password}
@@ -302,6 +322,7 @@ const AuthPage = () => {
                     type="button" 
                     className="password-toggle" 
                     onClick={toggleSignupPasswordVisibility}
+                    aria-label={showSignupPassword ? "Hide password" : "Show password"}
                   >
                     {showSignupPassword ? "👁️" : "👁️‍🗨️"}
                   </button>
@@ -366,8 +387,10 @@ const AuthPage = () => {
           </p>
           <form onSubmit={handleResetPassword} className="reset-form">
             <div className="form-group">
-              <div className="input-icon-wrapper">
-                <i className="input-icon far fa-envelope"></i>
+              <div className="input-group">
+                <div className="input-icon-container">
+                  <i className="fa fa-envelope"></i>
+                </div>
                 <input
                   type="email"
                   className="form-control"
