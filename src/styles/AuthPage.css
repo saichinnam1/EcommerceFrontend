@@ -7,18 +7,17 @@
   background-size: cover;
   background-position: center;
   padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .auth-container {
   width: 100%;
-  max-width: 480px;
-  background-color: rgba(255, 255, 255, 0.97);
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 15px 60px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   padding: 40px 35px;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
@@ -28,20 +27,19 @@
 }
 
 .auth-logo h1 {
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   color: #333;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   background: linear-gradient(to right, #764ba2, #667eea);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
 }
 
 .auth-logo p {
   color: #666;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .auth-tabs {
@@ -73,7 +71,7 @@
 .tab-btn.active {
   background-color: #fff;
   color: #764ba2;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .auth-form-container {
@@ -88,12 +86,11 @@
 
 .form-group {
   margin-bottom: 5px;
-  position: relative;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: 500;
   color: #444;
   font-size: 15px;
@@ -107,23 +104,21 @@
 
 .input-icon {
   position: absolute;
-  left: 16px;
-  color: #888;
-  font-size: 16px;
+  left: 20px;
+  color: #aaa;
   transition: color 0.2s ease;
-  z-index: 2;
+  z-index: 1;
+  font-size: 16px;
 }
 
 .form-control {
   width: 100%;
-  padding: 16px 16px 16px 48px;
+  padding: 16px 15px 16px 50px;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   font-size: 15px;
   background-color: #f9fafc;
   transition: all 0.3s ease;
-  color: #333;
-  box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -138,6 +133,10 @@
   color: #667eea;
 }
 
+.password-field {
+  position: relative;
+}
+
 .password-toggle {
   position: absolute;
   right: 16px;
@@ -147,15 +146,10 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  font-size: 16px;
-  color: #777;
-  z-index: 2;
+  font-size: 18px;
+  color: #666;
   transition: color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
+  z-index: 1;
 }
 
 .password-toggle:hover {
@@ -166,7 +160,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 .forgot-password {
@@ -185,7 +179,7 @@
 .form-check {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin: 5px 0;
 }
 
@@ -194,15 +188,12 @@
   height: 18px;
   accent-color: #667eea;
   cursor: pointer;
-  margin: 0;
 }
 
 .form-check-label {
   font-size: 14px;
   color: #555;
   cursor: pointer;
-  margin: 0;
-  user-select: none;
 }
 
 .remember-me {
@@ -210,14 +201,14 @@
 }
 
 .terms-check {
-  margin: 8px 0 15px;
+  margin-bottom: 10px;
 }
 
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px 24px;
+  padding: 16px 20px;
   border: none;
   border-radius: 12px;
   font-size: 16px;
@@ -231,19 +222,19 @@
   color: white;
   width: 100%;
   height: 56px;
-  margin-top: 15px;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .btn-primary:hover {
   background: linear-gradient(to right, #667eea, #764ba2);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
 }
 
 .btn-primary:active {
   transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
 }
 
 .separator {
@@ -281,13 +272,12 @@
   transition: all 0.25s ease;
   text-decoration: none;
   width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  height: 56px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .btn-google:hover {
   background-color: #f8f9fa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
   border-color: #ccc;
 }
 
@@ -296,11 +286,10 @@
   align-items: center;
   justify-content: center;
   margin-right: 12px;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   color: #ea4335;
   font-weight: bold;
-  font-size: 16px;
   background-color: #fff;
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -311,7 +300,7 @@
   text-align: center;
   margin-top: 25px;
   color: #666;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .text-btn {
@@ -321,7 +310,7 @@
   font-weight: 600;
   cursor: pointer;
   padding: 0;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .text-btn:hover {
@@ -333,7 +322,7 @@
 .password-reset-modal .modal-content {
   border-radius: 20px;
   border: none;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .password-reset-modal .modal-header {
@@ -373,7 +362,7 @@
   border: none;
   padding: 12px 20px;
   transition: background-color 0.2s;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .cancel-btn:hover {
@@ -383,14 +372,14 @@
 .reset-submit-btn {
   background: linear-gradient(to right, #764ba2, #667eea);
   border: none;
-  padding: 12px 20px;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-  border-radius: 12px;
+  padding: 12px 24px;
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
 }
 
 .reset-submit-btn:hover {
   background: linear-gradient(to right, #667eea, #764ba2);
-  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
 
 @media (max-width: 576px) {
@@ -409,7 +398,7 @@
   }
   
   .form-options {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
@@ -426,14 +415,6 @@
   .mobile-alt-option {
     display: block;
   }
-  
-  .btn {
-    padding: 14px 20px;
-  }
-  
-  .form-control {
-    padding: 14px 14px 14px 45px;
-  }
 }
 
 .Toastify__toast-container {
@@ -442,8 +423,7 @@
 
 .Toastify__toast {
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .Toastify__toast--success {
