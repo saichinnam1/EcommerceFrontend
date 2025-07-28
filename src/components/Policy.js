@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
       </section>
 
       <p className="text-lg text-center mt-8">
-        <em>Last Updated: April 28, 2025</em>
+        <em>Last Updated: August , 2024</em>
       </p>
     </div>
   );
